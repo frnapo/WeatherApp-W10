@@ -61,10 +61,52 @@ const WeatherDetails = () => {
     setDailyForecast(filteredData);
   };
 
+  const weatherBackgrounds = {
+    Clear: "https://papers.co/wallpaper/papers.co-sc20-sky-blue-sunny-day-la-35-3840x2160-4k-wallpaper.jpg",
+    Rain: "https://cdn.wallpapersafari.com/80/79/6JmCqO.jpg",
+    Clouds: "https://wallpaperswide.com/download/cloudy_sky_6-wallpaper-4096x3072.jpg",
+    ClearNight: "https://wallpapercave.com/wp/wp9267865.jpg",
+    // RainNight: ""
+    // CloudsNight: ""
+  };
+
+  const currentHour = new Date().getHours();
+
+  const isDaytime = currentHour >= 6 && currentHour < 18;
+
+  let backgroundUrl = "";
+
+  if (currentWeather && currentWeather.weather && currentWeather.weather.length > 0) {
+    const currentCondition = currentWeather.weather[0].main;
+
+    switch (currentCondition) {
+      case "Clear":
+        backgroundUrl = isDaytime ? weatherBackgrounds.Clear : weatherBackgrounds.ClearNight;
+        break;
+      case "Rain":
+        backgroundUrl = isDaytime ? weatherBackgrounds.Rain : weatherBackgrounds.RainNight;
+        break;
+      case "Clouds":
+        backgroundUrl = isDaytime ? weatherBackgrounds.Clouds : weatherBackgrounds.CloudsNight;
+        break;
+      default:
+        break;
+    }
+  }
+
+  const weatherDetailsStyle = {
+    background: `url(${backgroundUrl}) no-repeat center center`,
+    backgroundSize: "cover",
+    padding: "120px 0",
+  };
+
   return (
     <>
       <div className="d-flex flex-column bg-dark" style={{ height: "95vh" }}>
-        <div className="weather-details flex-grow-1 bg-dark d-flex justify-content-center align-items-center">
+        <div
+          className="weather-details flex-grow-1 bg-dark d-flex justify-content-center align-items-center"
+          style={weatherDetailsStyle}
+        >
           {currentWeather && (
             <div className="text-center text-white mb-5" style={{ marginTop: "-100px" }}>
               <h2 className="mb-4 display-1">{currentWeather.name.toUpperCase()}</h2>
