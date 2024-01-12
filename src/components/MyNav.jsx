@@ -11,9 +11,7 @@ const MyNav = () => {
         <div className="nav-slash">/</div>
         <Nav.Link className="nav-item-custom">Weather</Nav.Link>
         <div className="nav-slash">/</div>
-        <Nav.Link href="#gallery" className="nav-item-custom">
-          Gallery
-        </Nav.Link>
+        <Nav.Link className="nav-item-custom">Gallery</Nav.Link>
       </Nav>
     </Navbar>
   );

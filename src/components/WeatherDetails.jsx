@@ -39,7 +39,7 @@ const WeatherDetails = () => {
   }, [lat, lon]);
 
   const getIconUrl = (iconCode) => {
-    return `http://openweathermap.org/img/wn/${iconCode}.png`;
+    return `http://openweathermap.org/img/wn/${iconCode}@4x.png`;
   };
 
   const getForecastForNextDays = () => {
@@ -110,7 +110,7 @@ const WeatherDetails = () => {
           )}
         </div>
         <Container className="bg-dark mt-n3 px-0 mt-auto meteo-container p-3">
-          <Row xs={2} md={2} lg={5} className="g-4">
+          <Row xs={1} md={3} lg={5} className="g-4">
             {forecast &&
               getForecastForNextDays().map((day, index) => (
                 <Col key={index} className="p-0 hover-zoom">
