@@ -8,8 +8,8 @@ import WeatherDetails from "./components/WeatherDetails";
 function App() {
   return (
     <>
-      <MyNav />
       <BrowserRouter>
+        <MyNav />
         <Routes>
           <Route path="/" element={<WeatherSearch />} />
           <Route path="/weather/:lat/:lon" element={<WeatherDetails />} />

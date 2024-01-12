@@ -48,7 +48,7 @@ const WeatherSearch = () => {
         Il tuo browser non supporta il tag video.
       </video>
       <Container className="search-container">
-        <h1 className="text-center text-white">Benvenuto su DreamWeather</h1>
+        <h1 className="text-center text-white mt-5">Benvenuto su DreamWeather</h1>
         <p className="mb-5 mt-0 p-0 text-center text-white">Il meteo dei sogni.</p>
         <form onSubmit={handleSearch} className="search-form">
           <FormControl
