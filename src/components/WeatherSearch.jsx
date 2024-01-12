@@ -57,17 +57,19 @@ const WeatherSearch = () => {
             className="mr-sm-2 custom-search-bar"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <Button variant="outline-light" type="submit" className="ms-2">
+          <Button variant="outline-light" type="submit" className="ms-2 px-5">
             Cerca
           </Button>
         </form>
         {locationData && (
-          <Link to={`/weather/${locationData.lat}/${locationData.lon}`}>
-            Vedi dettagli meteo per {locationData.name}
-          </Link>
+          <div className="details-link-card">
+            <Link to={`/weather/${locationData.lat}/${locationData.lon}`} className="details-link">
+              Vedi dettagli meteo per {locationData.name}
+            </Link>
+          </div>
         )}
         {alert.show && (
-          <Alert variant="danger" className="search-alert">
+          <Alert variant="danger" className="search-alert mt-3">
             {alert.message}
           </Alert>
         )}

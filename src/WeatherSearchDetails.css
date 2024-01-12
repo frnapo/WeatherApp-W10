@@ -31,6 +31,28 @@
   color: white;
 }
 
+.details-link-card {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.details-link {
+  text-decoration: none !important;
+  color: #007bff;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.details-link:hover {
+  color: #0056b3;
+}
+
 /*-------------------------------------- WEATHER DETAILS COMPONENT -------------------------------------------------- */
 .weather-details {
   color: #fff;
