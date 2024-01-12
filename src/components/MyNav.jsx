@@ -4,7 +4,7 @@ const MyNav = () => {
   return (
     <Navbar className="custom-navbar" bg="dark" variant="dark">
       <Nav className="mr-auto">
-        <NavLink href="#home" className="nav-item-custom ms-3" to="/">
+        <NavLink className="nav-item-custom ms-3" to="/">
           Home
         </NavLink>
         <div className="nav-slash">/</div>
