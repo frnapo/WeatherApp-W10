@@ -7,6 +7,8 @@ const WeatherDetails = () => {
   const { lat, lon } = useParams();
   const [currentWeather, setCurrentWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [dailyForecast, setDailyForecast] = useState([]);
 
   useEffect(() => {
     const apiKey = "6d9914d7acec3581e18aa480656d0274";
@@ -44,43 +46,80 @@ const WeatherDetails = () => {
     return forecast.list.filter((item, index) => index % 8 === 0).slice(0, 5);
   };
 
+  const handleCardClick = (day) => {
+    setSelectedCard(day);
+    const selectedDate = new Date(day.dt * 1000).toDateString();
+    const filteredData = forecast.list.filter((item) => new Date(item.dt * 1000).toDateString() === selectedDate);
+    setDailyForecast(filteredData);
+  };
+
   return (
     <>
       <div className="d-flex flex-column bg-dark" style={{ height: "95vh" }}>
         <div className="weather-details flex-grow-1 bg-dark d-flex justify-content-center align-items-center">
           {currentWeather && (
-            <div className="text-center text-white mb-5" style={{ marginTop: "-500px" }}>
-              <h2 className="mb-4 display-1">
-                {currentWeather.name.toUpperCase()}{" "}
-                <img
-                  src={getIconUrl(currentWeather.weather[0].icon)}
-                  alt="Current weather"
-                  style={{ width: "100px" }}
-                />
-              </h2>
-              <p className="text-lead text-light">
-                Clicca su una card per visualizzare i dettagli inerenti al giorno scelto
-              </p>
+            <div className="text-center text-white mb-5" style={{ marginTop: "-100px" }}>
+              <h2 className="mb-4 display-1">{currentWeather.name.toUpperCase()}</h2>
+
+              {selectedCard ? (
+                <div className="selected-card-details">
+                  <h2 className="mb-5">
+                    Dettagli per il {selectedCard && new Date(selectedCard.dt * 1000).toLocaleDateString()}
+                  </h2>
+                  <Container>
+                    <Row>
+                      {dailyForecast.map((hourlyData, index) => (
+                        <Col key={index} className="mb-4" xs={12} md={6} lg={3}>
+                          <Card className="h-100 bg-transparent border-0 custom-card">
+                            <Card.Body>
+                              <Card.Title>
+                                Ore{" "}
+                                {new Date(hourlyData.dt * 1000).toLocaleTimeString("it-IT", {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}
+                                <img
+                                  src={getIconUrl(hourlyData.weather[0].icon)}
+                                  alt="Weather icon"
+                                  style={{ width: "50px" }}
+                                />
+                              </Card.Title>
+                              <Card.Text>Temp {(hourlyData.main.temp - 273.15).toFixed(0)}°C</Card.Text>
+                              <Card.Text>Condizioni {hourlyData.weather[0].description}</Card.Text>
+                            </Card.Body>
+                          </Card>
+                        </Col>
+                      ))}
+                    </Row>
+                  </Container>
+                </div>
+              ) : (
+                <p className="text-lead text-light">
+                  Clicca su una card per visualizzare i dettagli inerenti al giorno scelto
+                </p>
+              )}
             </div>
           )}
         </div>
-        <Container className="bg-dark mt-n3 px-0 mt-auto meteo-container">
-          <Row xs={1} md={2} lg={5} className="g-4">
+        <Container className="bg-dark mt-n3 px-0 mt-auto meteo-container p-3">
+          <Row xs={2} md={2} lg={5} className="g-4">
             {forecast &&
               getForecastForNextDays().map((day, index) => (
                 <Col key={index} className="p-0 hover-zoom">
                   <Card
-                    className="forecast-card rounded-0 mt-3 mb-3 text-white border-0 bg-dark"
+                    className={`forecast-card rounded-3 me-3 text-white border-1 border-dark bg-dark ${
+                      selectedCard === day ? "selected" : ""
+                    }`}
                     style={{ cursor: "pointer" }}
+                    onClick={() => handleCardClick(day)}
                   >
-                    <h3>
+                    <h3 className="m-3">
                       {currentWeather.name}
                       <Card.Img variant="top" src={getIconUrl(day.weather[0].icon)} />
                     </h3>
                     <Card.Body>
                       <Card.Title>{new Date(day.dt * 1000).toLocaleDateString()}</Card.Title>
-                      <Card.Text>Temp: {(day.main.temp - 273.15).toFixed(0)}°C</Card.Text>
-                      <Card.Text>Condizioni: {day.weather[0].description}</Card.Text>
+                      <Card.Text>Temp {(day.main.temp - 273.15).toFixed(0)}°C</Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>

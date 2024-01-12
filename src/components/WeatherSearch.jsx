@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, FormControl, Button, Alert } from "react-bootstrap";
 import "../WeatherSearchDetails.css";
 import { Link } from "react-router-dom";
+import myVideo from "../assets/myVideo.mp4";
 
 const WeatherSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -43,15 +44,17 @@ const WeatherSearch = () => {
   return (
     <div className="video-search-container bg-dark" style={{ height: "95vh" }}>
       <video autoPlay loop muted className="video-bg">
-        <source src="path_to_your_video.mp4" type="video/mp4" />
+        <source src={myVideo} type="video/mp4" />
         Il tuo browser non supporta il tag video.
       </video>
       <Container className="search-container">
+        <h1 className="text-center text-white">Benvenuto su DreamWeather</h1>
+        <p className="mb-5 mt-0 p-0 text-center text-white">Il meteo dei sogni.</p>
         <form onSubmit={handleSearch} className="search-form">
           <FormControl
             type="text"
-            placeholder="Cerca meteo per città..."
-            className="mr-sm-2"
+            placeholder="Per inziare cerca una città..."
+            className="mr-sm-2 custom-search-bar"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <Button variant="outline-light" type="submit" className="ms-2">
