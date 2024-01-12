@@ -17,7 +17,9 @@ const WeatherSearch = () => {
   const fetchLocationData = async (city) => {
     try {
       const apiKey = "61ca30200b28d41a9baa34dea0d5d96e";
-      const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`);
+      const response = await fetch(
+        `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}&lang=it`
+      );
       const data = await response.json();
 
       if (data.length === 0) {

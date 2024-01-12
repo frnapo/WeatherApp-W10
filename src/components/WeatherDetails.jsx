@@ -14,7 +14,7 @@ const WeatherDetails = () => {
     const apiKey = "6d9914d7acec3581e18aa480656d0274";
     const fetchCurrentWeather = async () => {
       try {
-        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&lang=it`;
         const response = await fetch(url);
         const data = await response.json();
         setCurrentWeather(data);
@@ -25,7 +25,7 @@ const WeatherDetails = () => {
 
     const fetchForecast = async () => {
       try {
-        const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+        const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&lang=it`;
         const response = await fetch(url);
         const data = await response.json();
         setForecast(data);
@@ -44,6 +44,14 @@ const WeatherDetails = () => {
 
   const getForecastForNextDays = () => {
     return forecast.list.filter((item, index) => index % 8 === 0).slice(0, 5);
+  };
+
+  const toTitleCase = (str) => {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.substring(1))
+      .join(" ");
   };
 
   const handleCardClick = (day) => {
@@ -84,8 +92,8 @@ const WeatherDetails = () => {
                                   style={{ width: "50px" }}
                                 />
                               </Card.Title>
-                              <Card.Text>Temp {(hourlyData.main.temp - 273.15).toFixed(0)}°C</Card.Text>
-                              <Card.Text>Condizioni {hourlyData.weather[0].description}</Card.Text>
+                              <Card.Text>{(hourlyData.main.temp - 273.15).toFixed(0)}°C</Card.Text>
+                              <Card.Text>{toTitleCase(hourlyData.weather[0].description)}</Card.Text>
                             </Card.Body>
                           </Card>
                         </Col>
