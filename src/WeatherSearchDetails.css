@@ -82,3 +82,9 @@
   flex: 0 0 auto;
   margin-right: 10px;
 }
+
+@media (max-width: 576px) {
+  .scrollable {
+    max-width: 300px;
+  }
+}
