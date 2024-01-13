@@ -94,32 +94,44 @@ const WeatherDetails = () => {
     }
   }
 
-  const weatherDetailsStyle = {
-    background: `url(${backgroundUrl}) no-repeat center center`,
-    backgroundSize: "cover",
-    padding: "120px 0",
+  // eslint-disable-next-line no-lone-blocks
+  {
+    /* funzioni per giorni settimana*/
+  }
+
+  const getDayOfWeek = (timestamp) => {
+    const date = new Date(timestamp * 1000);
+    const day = date.toLocaleDateString("it-IT", { weekday: "short" });
+    return day.charAt(0).toUpperCase() + day.slice(1, 3);
+  };
+
+  const formatDateWithWeekday = (timestamp) => {
+    const date = new Date(timestamp * 1000);
+    const weekday = date.toLocaleDateString("it-IT", { weekday: "long" });
+    const formattedWeekday = weekday.charAt(0).toUpperCase() + weekday.slice(1);
+    const dayMonth = date.toLocaleDateString("it-IT", { day: "2-digit", month: "short" });
+
+    return `${formattedWeekday} ${dayMonth}`;
   };
 
   return (
-    <>
-      <div className="d-flex flex-column bg-dark" style={{ height: "95vh" }}>
+    <Container fluid className="bg-dark px-0">
+      <div className="d-flex flex-column bg-dark" style={{ height: "100vh" }}>
         <div
           className="weather-details flex-grow-1 bg-dark d-flex justify-content-center align-items-center"
-          style={weatherDetailsStyle}
+          style={{ background: `url(${backgroundUrl}) no-repeat center center` }}
         >
           {currentWeather && (
-            <div className="text-center text-white mb-5" style={{ marginTop: "-100px" }}>
+            <div className="text-center text-white mb-5">
               <h2 className="mb-4 display-1">{currentWeather.name.toUpperCase()}</h2>
 
               {selectedCard ? (
                 <div className="selected-card-details">
-                  <h2 className="mb-5">
-                    Dettagli per il {selectedCard && new Date(selectedCard.dt * 1000).toLocaleDateString()}
-                  </h2>
-                  <Container>
+                  <h2 className="mb-5">Previsioni per {selectedCard && formatDateWithWeekday(selectedCard.dt)}</h2>
+                  <Container className="scrollable">
                     <Row>
                       {dailyForecast.map((hourlyData, index) => (
-                        <Col key={index} className="mb-4" xs={12} md={6} lg={3}>
+                        <Col key={index} className="mb-4" xs={12}>
                           <Card className="h-100 bg-transparent border-0 custom-card">
                             <Card.Body>
                               <Card.Title>
@@ -151,33 +163,31 @@ const WeatherDetails = () => {
             </div>
           )}
         </div>
-        <Container className="bg-dark mt-n3 px-0 mt-auto meteo-container p-3">
-          <Row xs={1} md={3} lg={5} className="g-4">
-            {forecast &&
-              getForecastForNextDays().map((day, index) => (
-                <Col key={index} className="p-0 hover-zoom">
-                  <Card
-                    className={`forecast-card rounded-3 me-3 text-white border-1 border-dark bg-dark ${
-                      selectedCard === day ? "selected" : ""
-                    }`}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleCardClick(day)}
-                  >
-                    <h3 className="m-3">
-                      {currentWeather.name}
-                      <Card.Img variant="top" src={getIconUrl(day.weather[0].icon)} />
-                    </h3>
-                    <Card.Body>
-                      <Card.Title>{new Date(day.dt * 1000).toLocaleDateString()}</Card.Title>
-                      <Card.Text>Temp {(day.main.temp - 273.15).toFixed(0)}°C</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
-          </Row>
-        </Container>
+        <Row xs={5} className="g-1 fixed-bottom">
+          {forecast &&
+            getForecastForNextDays().map((day, index) => (
+              <Col key={index} className="p-0 hover-zoom">
+                <Card
+                  className={`forecast-card rounded-3 text-white border-0 bg-dark fs-1 display-4 ${
+                    selectedCard === day ? "selected" : ""
+                  }`}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleCardClick(day)}
+                >
+                  <h3 className="text-center mt-3 display-6">{getDayOfWeek(day.dt)}</h3>
+                  <Card.Img variant="top" src={getIconUrl(day.weather[0].icon)} className="align-self-center" />
+                  <Card.Body className="d-flex flex-column justify-content-center align-items-center">
+                    <Card.Title className="fs-6">
+                      {new Date(day.dt * 1000).toLocaleDateString("it-IT", { day: "2-digit", month: "short" })}
+                    </Card.Title>
+                    <Card.Text>{(day.main.temp - 273.15).toFixed(0)}°C</Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+        </Row>
       </div>
-    </>
+    </Container>
   );
 };
 

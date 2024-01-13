@@ -56,15 +56,12 @@
 /*-------------------------------------- WEATHER DETAILS COMPONENT -------------------------------------------------- */
 
 .forecast-card img {
-  width: 50px;
+  width: 70px;
   height: auto;
 }
 
 .forecast-card .card-body {
   padding: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
 }
 
 .custom-card,
@@ -73,8 +70,14 @@
 }
 
 .custom-card:hover {
-  transform: scale(1.1);
+  transform: scale(1.01);
   z-index: 10;
   position: relative;
   transition: transform 0.3s ease-in-out;
+}
+
+/* contenuto scrollabile al centro */
+.scrollable {
+  overflow-y: auto;
+  max-height: 400px;
 }
