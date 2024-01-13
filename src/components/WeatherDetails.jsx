@@ -94,21 +94,22 @@ const WeatherDetails = () => {
     }
   }
 
-  const weatherDetailsStyle = {
-    background: `url(${backgroundUrl}) no-repeat center center`,
-    backgroundSize: "cover",
-    padding: "120px 0",
+  const blurOverlayStyle = {
+    content: "''",
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    background: `url(${backgroundUrl}) no-repeat center center / cover`,
   };
-
   return (
     <>
       <div className="d-flex flex-column bg-dark" style={{ height: "95vh" }}>
-        <div
-          className="weather-details flex-grow-1 bg-dark d-flex justify-content-center align-items-center"
-          style={weatherDetailsStyle}
-        >
+        <div className="weather-details flex-grow-1 bg-dark d-flex justify-content-center align-items-center">
+          {backgroundUrl && <div style={blurOverlayStyle}></div>}
           {currentWeather && (
-            <div className="text-center text-white mb-5" style={{ marginTop: "-100px" }}>
+            <div className="text-center text-white mb-5" style={{ marginTop: "-100px", zIndex: 1 }}>
               <h2 className="mb-4 display-1">{currentWeather.name.toUpperCase()}</h2>
 
               {selectedCard ? (
