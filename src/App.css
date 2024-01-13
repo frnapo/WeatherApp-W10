@@ -1,20 +1,25 @@
-.custom-navbar .navbar-nav .nav-slash {
-  color: white;
-  margin: 5px 30px;
-  font-size: 20px;
-}
-
 html {
   background-color: #212529;
 }
 
+.nav-button {
+  color: white !important;
+}
+
+.nav-button:hover {
+  color: black !important;
+}
 /*  scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 3px;
 }
 
 ::-webkit-scrollbar-track {
   background: transparent;
+  margin: 3%;
+  margin-inline: 30px;
+  margin-inline-end: 40px;
 }
 
 ::-webkit-scrollbar-thumb {

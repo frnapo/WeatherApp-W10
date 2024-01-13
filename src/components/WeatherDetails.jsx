@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "../WeatherSearchDetails.css";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import Clear from "../assets/Clear.jpg";
+import ClearNight from "../assets/ClearNight.jpg";
+import Clouds from "../assets/Clouds.jpg";
+import Rain from "../assets/Rain.jpg";
 
 const WeatherDetails = () => {
   const { lat, lon } = useParams();
@@ -62,12 +66,20 @@ const WeatherDetails = () => {
   };
 
   const weatherBackgrounds = {
-    Clear: "https://papers.co/wallpaper/papers.co-sc20-sky-blue-sunny-day-la-35-3840x2160-4k-wallpaper.jpg",
-    Rain: "https://cdn.wallpapersafari.com/80/79/6JmCqO.jpg",
-    Clouds: "https://wallpaperswide.com/download/cloudy_sky_6-wallpaper-4096x3072.jpg",
-    ClearNight: "https://wallpapercave.com/wp/wp9267865.jpg",
+    Clear: Clear,
+    Rain: Rain,
+    Clouds: Clouds,
+    // Snow
+    // Sand
+    // Mist
+    Thunderstorm: "",
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ClearNight: Rain,
     // RainNight: ""
     // CloudsNight: ""
+    // SnowNight: ""
+    // SandNight: ""
+    //ThunderstormNight: ""
   };
 
   const currentHour = new Date().getHours();
@@ -94,6 +106,11 @@ const WeatherDetails = () => {
     }
   }
 
+  const handleDeselectCard = () => {
+    setSelectedCard(null);
+    setDailyForecast([]);
+  };
+
   // eslint-disable-next-line no-lone-blocks
   {
     /* funzioni per giorni settimana*/
@@ -119,7 +136,7 @@ const WeatherDetails = () => {
       <div className="d-flex flex-column bg-dark" style={{ height: "100vh" }}>
         <div
           className="weather-details flex-grow-1 bg-dark d-flex justify-content-center align-items-center"
-          style={{ background: `url(${backgroundUrl}) no-repeat center center` }}
+          style={{ background: `url(${backgroundUrl}) no-repeat center center / cover` }}
         >
           {currentWeather && (
             <div className="text-center text-white mb-5">
@@ -127,38 +144,55 @@ const WeatherDetails = () => {
 
               {selectedCard ? (
                 <div className="selected-card-details">
-                  <h2 className="mb-5">Previsioni per {selectedCard && formatDateWithWeekday(selectedCard.dt)}</h2>
-                  <Container className="scrollable">
-                    <Row>
-                      {dailyForecast.map((hourlyData, index) => (
-                        <Col key={index} className="mb-4" xs={12}>
-                          <Card className="h-100 bg-transparent border-0 custom-card">
-                            <Card.Body>
-                              <Card.Title>
-                                Ore{" "}
-                                {new Date(hourlyData.dt * 1000).toLocaleTimeString("it-IT", {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                })}
-                                <img
-                                  src={getIconUrl(hourlyData.weather[0].icon)}
-                                  alt="Weather icon"
-                                  style={{ width: "50px" }}
-                                />
-                              </Card.Title>
-                              <Card.Text>{(hourlyData.main.temp - 273.15).toFixed(0)}°C</Card.Text>
-                              <Card.Text>{toTitleCase(hourlyData.weather[0].description)}</Card.Text>
-                            </Card.Body>
-                          </Card>
-                        </Col>
-                      ))}
-                    </Row>
+                  <h2 className="mb-4 display-5">
+                    {selectedCard && formatDateWithWeekday(selectedCard.dt)}{" "}
+                    <Button variant="outline-light" className="rounded-5 px-4 mb-1 ms-2" onClick={handleDeselectCard}>
+                      X
+                    </Button>
+                  </h2>
+                  <Container className="scrollable mt-5">
+                    {dailyForecast.map((hourlyData, index) => (
+                      <Card key={index} className="scrollable-card bg-transparent border-0 custom-card text-light">
+                        <Card.Body>
+                          <Card.Title className="display-2">
+                            {new Date(hourlyData.dt * 1000).toLocaleTimeString("it-IT", {
+                              hour: "2-digit",
+                            })}
+                            <img
+                              src={getIconUrl(hourlyData.weather[0].icon)}
+                              alt="Weather icon"
+                              style={{ width: "100px" }}
+                              className="m-0"
+                            />
+                          </Card.Title>
+                          <Card.Text className="display-4 mb-0">
+                            {(hourlyData.main.temp - 273.15).toFixed(0)}°C
+                          </Card.Text>
+                          <Card.Text>{toTitleCase(hourlyData.weather[0].description)}</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    ))}
                   </Container>
                 </div>
               ) : (
-                <p className="text-lead text-light">
-                  Clicca su una card per visualizzare i dettagli inerenti al giorno scelto
-                </p>
+                <div>
+                  <div className="current-weather-details">
+                    <p className="display-1">{(currentWeather.main.temp - 273.15).toFixed(0)}°C</p>
+                    <p className="display-6">
+                      {toTitleCase(currentWeather.weather[0].description)}
+                      <img
+                        src={getIconUrl(currentWeather.weather[0].icon)}
+                        alt="Weather icon"
+                        style={{ width: "70px" }}
+                        className="mb-1"
+                      />
+                    </p>
+                    <p className="text-lead text-light">Umidità: {currentWeather.main.humidity}%</p>
+                    <p className="text-lead text-light">Pressione: {currentWeather.main.pressure} hPa</p>
+                    <p className="text-lead text-light">Vento: {(currentWeather.wind.speed * 3.6).toFixed(0)} km/h</p>
+                  </div>
+                  <p className="text-lead text-light">Seleziona un giorno per controllare le previsioni</p>
+                </div>
               )}
             </div>
           )}
@@ -168,7 +202,7 @@ const WeatherDetails = () => {
             getForecastForNextDays().map((day, index) => (
               <Col key={index} className="p-0 hover-zoom">
                 <Card
-                  className={`forecast-card rounded-3 text-white border-0 bg-dark fs-1 display-4 ${
+                  className={`forecast-card text-white rounded-0 border-0  bg-transparent fs-1 display-4 ${
                     selectedCard === day ? "selected" : ""
                   }`}
                   style={{ cursor: "pointer" }}

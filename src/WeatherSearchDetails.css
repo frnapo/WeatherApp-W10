@@ -66,18 +66,19 @@
 
 .custom-card,
 .hover-zoom:hover .card {
-  background-color: rgba(255, 255, 255, 0.2) !important;
-}
-
-.custom-card:hover {
-  transform: scale(1.01);
-  z-index: 10;
-  position: relative;
-  transition: transform 0.3s ease-in-out;
+  background-color: rgba(164, 164, 164, 0.5) !important;
 }
 
 /* contenuto scrollabile al centro */
 .scrollable {
-  overflow-y: auto;
-  max-height: 400px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-bottom: 7em;
+  padding: 30px;
+}
+
+.scrollable-card {
+  flex: 0 0 auto;
+  margin-right: 10px;
 }

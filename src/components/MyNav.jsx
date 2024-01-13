@@ -1,17 +1,15 @@
-import { Nav, Navbar } from "react-bootstrap";
+import { Button, Nav, Navbar } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
 const MyNav = () => {
   return (
-    <Navbar className="custom-navbar fixed-top" bg="dark" variant="dark">
+    <Navbar className="custom-navbar fixed-top bg-transparent">
       <Nav className="mr-auto">
-        <NavLink className="nav-item-custom ms-3 nav-link" to="/">
-          Home
-        </NavLink>
-        <div className="nav-slash">/</div>
-        <Nav.Link className="nav-item-custom">Weather</Nav.Link>
-        <div className="nav-slash">/</div>
-        <Nav.Link className="nav-item-custom">Gallery</Nav.Link>
+        <Button className="ms-3 mt-2" variant="outline-light rounded-5 px-4">
+          <NavLink className="nav-item-custom nav-link nav-button" to="/">
+            Home
+          </NavLink>
+        </Button>
       </Nav>
     </Navbar>
   );
