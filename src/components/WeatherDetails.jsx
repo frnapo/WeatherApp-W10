@@ -6,6 +6,7 @@ import Clear from "../assets/Clear.jpg";
 import ClearNight from "../assets/ClearNight.jpg";
 import Clouds from "../assets/Clouds.jpg";
 import Rain from "../assets/Rain.jpg";
+import MyNav from "./MyNav";
 
 const WeatherDetails = () => {
   const { lat, lon } = useParams();
@@ -133,6 +134,7 @@ const WeatherDetails = () => {
 
   return (
     <Container fluid className="bg-dark px-0">
+      <MyNav />
       <div className="d-flex flex-column bg-dark" style={{ height: "100vh" }}>
         <div
           className="weather-details flex-grow-1 bg-dark d-flex justify-content-center align-items-center"
