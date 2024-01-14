@@ -5,7 +5,15 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import Clear from "../assets/Clear.jpg";
 import ClearNight from "../assets/ClearNight.jpg";
 import Clouds from "../assets/Clouds.jpg";
+import CloudsNight from "../assets/CloudsNight.jpg";
 import Rain from "../assets/Rain.jpg";
+import RainNight from "../assets/RainNight.jpg";
+import Fog from "../assets/Fog.jpeg";
+import FogNight from "../assets/FogNight.jpeg";
+import Snow from "../assets/Snow.jpg";
+import SnowNight from "../assets/SnowNight.jpg";
+import Thunderstorm from "../assets/Thunderstorm.jpg";
+import ThunderstormNight from "../assets/ThunderstormNight.jpg";
 import MyNav from "./MyNav";
 
 const WeatherDetails = () => {
@@ -70,17 +78,28 @@ const WeatherDetails = () => {
     Clear: Clear,
     Rain: Rain,
     Clouds: Clouds,
-    // Snow
-    // Sand
-    // Mist
-    Thunderstorm: "",
+    Fog: Fog,
+    Snow: Snow,
+    Mist: Fog, // da cambiare dopo
+    Thunderstorm: Thunderstorm,
+    // Smoke da fare piu avanti
+    // Haze da fare piu avanti
+    // Sand da fare piu avanti
+    // Dust da fare piu avanti
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     ClearNight: ClearNight,
-    // RainNight: ""
-    // CloudsNight: ""
-    // SnowNight: ""
-    // SandNight: ""
-    //ThunderstormNight: ""
+    RainNight: RainNight,
+    CloudsNight: CloudsNight,
+    FogNight: FogNight,
+    SnowNight: SnowNight,
+    MistNight: FogNight, // da cambiare dopo
+    ThunderstormNight: ThunderstormNight, // da cambiare dopo non si legge bene la scritta della citta'
+    // SmokeNight: "da fare piu avanti"
+    // HazeNight: "da fare piu avanti"
+    // SandNight: "da fare piu avanti"
+    // DustNight: "da fare piu avanti"
   };
 
   const currentHour = new Date().getHours();
@@ -101,6 +120,18 @@ const WeatherDetails = () => {
         break;
       case "Clouds":
         backgroundUrl = isDaytime ? weatherBackgrounds.Clouds : weatherBackgrounds.CloudsNight;
+        break;
+      case "Fog":
+        backgroundUrl = isDaytime ? weatherBackgrounds.Fog : weatherBackgrounds.FogNight;
+        break;
+      case "Snow":
+        backgroundUrl = isDaytime ? weatherBackgrounds.Snow : weatherBackgrounds.SnowNight;
+        break;
+      case "Mist":
+        backgroundUrl = isDaytime ? weatherBackgrounds.Mist : weatherBackgrounds.MistNight;
+        break;
+      case "Thunderstorm":
+        backgroundUrl = isDaytime ? weatherBackgrounds.Thunderstorm : weatherBackgrounds.ThunderstormNight;
         break;
       default:
         break;
@@ -178,7 +209,7 @@ const WeatherDetails = () => {
                 </div>
               ) : (
                 <div>
-                  <div className="current-weather-details">
+                  <div className="current-weather-details mb-4">
                     <p className="display-1">{(currentWeather.main.temp - 273.15).toFixed(0)}°C</p>
                     <p className="display-6">
                       {toTitleCase(currentWeather.weather[0].description)}
@@ -193,7 +224,7 @@ const WeatherDetails = () => {
                     <p className="text-lead text-light">Pressione: {currentWeather.main.pressure} hPa</p>
                     <p className="text-lead text-light">Vento: {(currentWeather.wind.speed * 3.6).toFixed(0)} km/h</p>
                   </div>
-                  <p className="text-lead text-light mb-5">Seleziona un giorno per controllare le previsioni</p>
+                  <p className="text-lead text-light mb-5 pb-5">Seleziona un giorno per controllare le previsioni</p>
                 </div>
               )}
             </div>
