@@ -191,7 +191,7 @@ const WeatherDetails = () => {
                     <p className="text-lead text-light">Pressione: {currentWeather.main.pressure} hPa</p>
                     <p className="text-lead text-light">Vento: {(currentWeather.wind.speed * 3.6).toFixed(0)} km/h</p>
                   </div>
-                  <p className="text-lead text-light">Seleziona un giorno per controllare le previsioni</p>
+                  <p className="text-lead text-light mb-5">Seleziona un giorno per controllare le previsioni</p>
                 </div>
               )}
             </div>
@@ -208,7 +208,7 @@ const WeatherDetails = () => {
                   style={{ cursor: "pointer" }}
                   onClick={() => handleCardClick(day)}
                 >
-                  <h3 className="text-center mt-3 display-6">{getDayOfWeek(day.dt)}</h3>
+                  <h3 className="text-center display-6">{getDayOfWeek(day.dt)}</h3>
                   <Card.Img variant="top" src={getIconUrl(day.weather[0].icon)} className="align-self-center" />
                   <Card.Body className="d-flex flex-column justify-content-center align-items-center">
                     <Card.Title className="fs-6">
